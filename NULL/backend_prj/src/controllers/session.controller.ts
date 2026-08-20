@@ -1,3 +1,9 @@
+//Person 3 Imports
+
+import { Request, Response } from "express";
+import { BookingStatus } from "../models/Booking";
+
+//----------------
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import { ClassSession } from '../models/ClassSession';
@@ -67,5 +73,87 @@ export const deleteSession = async (req: AuthRequest, res: Response) => {
   } 
   catch (error) {
     return res.status(500).json({ message: 'Server error deleting session', error });
+  }
+};
+
+//Person 3 adjustment for searching and filtering a session
+
+export const getSessions = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const {
+      title,
+      trainer,
+      date,
+      minAvailable,
+    } = req.query;
+
+    const filter: any = {};
+
+    if (title) {
+      filter.title = {
+        $regex: title,
+        $options: "i",
+      };
+    }
+
+    if (trainer) {
+      filter.trainer = trainer;
+    }
+
+    if (date) {
+      const start = new Date(date as string);
+      const end = new Date(start);
+
+      end.setDate(end.getDate() + 1);
+
+      filter.timeSlot = {
+        $gte: start,
+        $lt: end,
+      };
+    }
+
+    filter.timeSlot = {
+      ...(filter.timeSlot || {}),
+      $gt: new Date(),
+    };
+
+    const sessions = await ClassSession
+      .find(filter)
+      .populate("trainer", "fullName email");
+
+    const sessionsWithAvailability = await Promise.all(
+      sessions.map(async (session) => {
+        const bookedCount = await Booking.countDocuments({
+          session: session._id,
+          status: BookingStatus.BOOKED,
+        });
+
+        const remainingSpots = session.capacity - bookedCount;
+
+        return {
+          ...session.toObject(),
+          remainingSpots,
+        };
+      })
+    );
+
+    const result = minAvailable
+      ? sessionsWithAvailability.filter(
+          (session) =>
+            session.remainingSpots >= Number(minAvailable)
+        )
+      : sessionsWithAvailability;
+
+    return res.status(200).json({
+      sessions: result,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error while fetching sessions",
+      error,
+    });
   }
 };
