@@ -8,7 +8,16 @@ const options: swaggerJsdoc.Options = {
       version: '1.0.0',
       description: 'API for user management and authentication, session management, and booking management',
     },
-    servers: [{ url: 'http://localhost:5000' }]
+    servers: [{ url: 'http://localhost:5000' }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   apis: ['./src/routes/*.ts'],
 };
