@@ -10,9 +10,7 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV === 'production'
-          ? 'https://null-production-e8a8.up.railway.app'
-          : 'http://localhost:5000',
+        url: process.env.API_URL || 'http://localhost:5000',
       },
     ],
     components: {
