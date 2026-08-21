@@ -6,15 +6,9 @@ const options: swaggerJsdoc.Options = {
     info: {
       title: 'Gym Class Booking API',
       version: '1.0.0',
-      description: 'API documentation for Auth, Sessions, and Bookings',
+      description: 'API for user management and authentication, session management, and booking management',
     },
-    servers: [{ url: 'http://localhost:5000', description: 'Local server' }],
-    components: {
-      securitySchemes: {
-        bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      },
-    },
-    security: [{ bearerAuth: [] }],
+    servers: [{ url: 'http://localhost:5000' }]
   },
   apis: ['./src/routes/*.ts'],
 };

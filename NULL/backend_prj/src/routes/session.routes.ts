@@ -14,7 +14,7 @@ const router = Router();
 
 
 //Person 3 adustment 
-
+  
 /**
  * @swagger
  * /api/sessions:
