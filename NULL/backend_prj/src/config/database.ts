@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
-
+import dns from 'dns';
 export const connectDB = async (): Promise<void> => {
   try {
-    const mongoUri = process.env.MONGO_URI;
-    if (!mongoUri) {
-      throw new Error('MONGO_URI is not defined in environment variables');
-    }
+    const mongoUri = process.env.MONGO_URI as string;
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
     await mongoose.connect(mongoUri);
     console.log('MongoDB connected successfully');
   } catch (error) {
@@ -15,5 +13,3 @@ export const connectDB = async (): Promise<void> => {
 };
 
 
-// ananyaly9_db_user
-//2IApc679hYxCzarn
