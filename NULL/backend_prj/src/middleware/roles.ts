@@ -1,1 +1,1 @@
-import { authGuard, roleGuard } from '../middleware/auth';
+   export { authGuard, roleGuard } from './auth';
