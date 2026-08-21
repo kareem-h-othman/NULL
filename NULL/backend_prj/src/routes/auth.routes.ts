@@ -25,7 +25,7 @@ const router = Router();
  *     responses:
  *       201: { description: User registered successfully }
  *       400: { description: Missing fields or user already exists }
- */
+ */ 
 router.post('/register', register);
 
 /**

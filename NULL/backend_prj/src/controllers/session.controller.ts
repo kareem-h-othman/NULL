@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { BookingStatus } from "../models/Booking";
 
 //----------------
-import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import { ClassSession } from '../models/ClassSession';
 import { Booking } from '../models/Booking';
@@ -63,7 +62,7 @@ export const deleteSession = async (req: AuthRequest, res: Response) => {
 
     const activeBookings = await Booking.countDocuments({
       session: session._id,     
-      status: 'booked',         
+      BookingStatus: 'booked',         
     });
     if (activeBookings > 0) {
       return res.status(409).json({ message: 'Cannot delete session with active bookings' });

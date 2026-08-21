@@ -13,3 +13,7 @@ export const connectDB = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+
+// ananyaly9_db_user
+//2IApc679hYxCzarn
