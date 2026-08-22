@@ -39,7 +39,7 @@ const options: swaggerJsdoc.Options = {
       version: '1.0.0',
       description: 'API for user management and authentication, session management, and booking management',
     },
-    servers: [{ url: 'https://null-production-e8a8.up.railway.app/' }]
+    servers: [{ url: 'https://diligent-learning-production-b6fc.up.railway.app/' }]
   },
   apis: ['./src/routes/*.ts'],
 };
